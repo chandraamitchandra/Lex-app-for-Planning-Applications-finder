@@ -1,0 +1,270 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "Planbot",
+    "version": "2",
+    "intents": [
+      {
+        "name": "cancel",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [],
+        "slots": [],
+        "parentIntentSignature": "AMAZON.CancelIntent"
+      },
+      {
+        "name": "help",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [],
+        "slots": [],
+        "parentIntentSignature": "AMAZON.HelpIntent",
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Thanks, we will get back to you"
+            }
+          ]
+        }
+      },
+      {
+        "name": "searchforda",
+        "version": "19",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:313569800880:function:getData",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "Please get me more details for an application",
+          "app",
+          "Find the council for an application",
+          "I would like to know the details about an application",
+          "details about an application",
+          "information about a DA"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.NUMBER",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Sure, what's your 4 digit Planning portal application number "
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "da"
+          }
+        ],
+        "followUpPrompt": {
+          "prompt": {
+            "messages": [
+              {
+                "groupNumber": 1,
+                "contentType": "PlainText",
+                "content": "Thanks we will get back"
+              }
+            ],
+            "maxAttempts": 3
+          },
+          "rejectionStatement": {
+            "messages": [
+              {
+                "groupNumber": 1,
+                "contentType": "PlainText",
+                "content": "OK thanks"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "address",
+        "version": "1",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:313569800880:function:getData",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "do you know the site address",
+          "can you please tell me the address",
+          "address please"
+        ],
+        "slots": []
+      },
+      {
+        "name": "statusDa",
+        "version": "5",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:313569800880:function:getData",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "what is the status of the Da",
+          "Status"
+        ],
+        "slots": []
+      },
+      {
+        "name": "countcouncil",
+        "version": "3",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:313569800880:function:getData",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "How many applications are there for {council}",
+          "total applications for {council}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.AT_CITY",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "I can try , which council do you want to know about"
+                }
+              ],
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}",
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "council"
+          }
+        ]
+      },
+      {
+        "name": "Repeat",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [],
+        "slots": [],
+        "parentIntentSignature": "AMAZON.RepeatIntent"
+      },
+      {
+        "name": "welcome",
+        "version": "3",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "Hi",
+          "Hello",
+          "Hi There"
+        ],
+        "slots": [],
+        "conclusionStatement": {
+          "messages": [
+            {
+              "groupNumber": 1,
+              "contentType": "PlainText",
+              "content": "Hi, My name is Planbot, I can assist in finding details about the DA's. Ask me questions like , find more info about an application"
+            }
+          ]
+        }
+      },
+      {
+        "name": "applicationtype",
+        "version": "1",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:313569800880:function:getData",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "what type of application is it",
+          "application type",
+          "what is the type of this application"
+        ],
+        "slots": []
+      },
+      {
+        "name": "countcouncilstatus",
+        "version": "2",
+        "fulfillmentActivity": {
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:313569800880:function:getData",
+            "messageVersion": "1.0"
+          },
+          "type": "CodeHook"
+        },
+        "sampleUtterances": [
+          "and how many have status of {status}",
+          "do you know how many have status of {status}"
+        ],
+        "slots": [
+          {
+            "sampleUtterances": [],
+            "slotType": "AMAZON.EventType",
+            "slotConstraint": "Required",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Sure, which the status you want to know about"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "name": "status"
+          }
+        ]
+      }
+    ],
+    "voiceId": "Joanna",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 300,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    }
+  }
+}
